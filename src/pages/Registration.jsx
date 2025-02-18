@@ -20,10 +20,40 @@ const Registration = ({ addProfile }) => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith("image/")) {
+        alert("Please upload a valid image file.");
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Image size must be less than 5MB.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewProfile((prevProfile) => ({
+          ...prevProfile,
+          image: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    addProfile(newProfile); // Add new profile to the profiles array
-    navigate("/"); // Redirect to Home page after registration
+    if (!newProfile.name || !newProfile.regNo || !newProfile.details) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+    if (isNaN(newProfile.rating) || newProfile.rating < 0 || newProfile.rating > 5) {
+      alert("Please enter a valid rating between 0 and 5.");
+      return;
+    }
+    addProfile(newProfile);
+    navigate("/");
   };
 
   return (
@@ -49,11 +79,9 @@ const Registration = ({ addProfile }) => {
           required
         />
         <input
-          type="text"
+          type="file"
           name="image"
-          value={newProfile.image}
-          onChange={handleInputChange}
-          placeholder="Image URL"
+          onChange={handleImageChange}
           className="form-control mb-2"
           required
         />
@@ -69,6 +97,13 @@ const Registration = ({ addProfile }) => {
           Register Profile
         </button>
       </form>
+
+      {newProfile.image && (
+        <div className="mt-3">
+          <h5>Image Preview:</h5>
+          <img src={newProfile.image} alt="Preview" width="100" style={{ objectFit: "cover" }} />
+        </div>
+      )}
     </div>
   );
 };

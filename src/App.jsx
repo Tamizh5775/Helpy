@@ -9,10 +9,8 @@ import About from "./pages/About";
 import Registration from "./pages/Registration"; // Import Registration page
 
 function App() {
-  // Initialize with an empty profiles array
   const [profiles, setProfiles] = useState([]);
 
-  // Function to add a new profile
   const addProfile = (newProfile) => {
     setProfiles([...profiles, { ...newProfile, id: profiles.length + 1 }]);
   };
@@ -26,10 +24,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/about" element={<About />} />
           <Route path="/help-center" element={<HelpCenter />} />
-          <Route
-            path="/registration"
-            element={<Registration addProfile={addProfile} />} // Pass the addProfile function
-          />
+          <Route path="/registration" element={<Registration addProfile={addProfile} />} />
         </Routes>
       </div>
     </Router>
