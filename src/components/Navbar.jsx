@@ -5,7 +5,9 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">My App</Link>
+        <Link className="navbar-brand" to="/">
+          My App
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -20,19 +22,34 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
+              <Link className="nav-link" to="/">
+                Home
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/profile">Profile</Link>
+              <Link className="nav-link" to="/profile">
+                Profile
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">About</Link>
+              <Link className="nav-link" to="/about">
+                About
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/help-center">Help Center</Link>
+              <Link className="nav-link" to="/help-center">
+                Help Center
+              </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/registration">Registration</Link>
+              <Link className="nav-link" to="/registration">
+                Registration
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/userinfo">
+                Userinfo
+              </Link>
             </li>
           </ul>
         </div>

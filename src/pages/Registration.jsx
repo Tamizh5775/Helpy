@@ -48,7 +48,11 @@ const Registration = ({ addProfile }) => {
       alert("Please fill in all required fields.");
       return;
     }
-    if (isNaN(newProfile.rating) || newProfile.rating < 0 || newProfile.rating > 5) {
+    if (
+      isNaN(newProfile.rating) ||
+      newProfile.rating < 0 ||
+      newProfile.rating > 5
+    ) {
       alert("Please enter a valid rating between 0 and 5.");
       return;
     }
@@ -101,7 +105,12 @@ const Registration = ({ addProfile }) => {
       {newProfile.image && (
         <div className="mt-3">
           <h5>Image Preview:</h5>
-          <img src={newProfile.image} alt="Preview" width="100" style={{ objectFit: "cover" }} />
+          <img
+            src={newProfile.image}
+            alt="Preview"
+            width="100"
+            style={{ objectFit: "cover" }}
+          />
         </div>
       )}
     </div>

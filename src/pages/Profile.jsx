@@ -12,7 +12,6 @@ export default function Profile({ profiles }) {
   }
 
   return (
-
     <div className="p-6 max-w-3xl mx-auto">
       <button
         onClick={() => navigate(-1)}
@@ -32,7 +31,10 @@ export default function Profile({ profiles }) {
         <p className="mt-4 text-gray-800">{profile.details}</p>
         <div className="flex justify-center text-yellow-500 mt-2">
           {[...Array(5)].map((_, i) => (
-            <Star key={i} fill={i < Math.round(profile.rating) ? "#facc15" : "#d1d5db"} />
+            <Star
+              key={i}
+              fill={i < Math.round(profile.rating) ? "#facc15" : "#d1d5db"}
+            />
           ))}
         </div>
       </div>

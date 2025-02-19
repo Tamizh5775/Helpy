@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import HelpCenter from "./pages/HelpCenter";
 import About from "./pages/About";
 import Registration from "./pages/Registration";
+import Userinfo from "./pages/Userinfo";
 
 function App() {
   const [profiles, setProfiles] = useState([]); // No pre-defined profiles
@@ -21,10 +22,17 @@ function App() {
       <div className="container mt-4">
         <Routes>
           <Route path="/" element={<Home profiles={profiles} />} />
-          <Route path="/profile/:id" element={<Profile profiles={profiles} />} />
+          <Route
+            path="/profile/:id"
+            element={<Profile profiles={profiles} />}
+          />
           <Route path="/about" element={<About />} />
           <Route path="/help-center" element={<HelpCenter />} />
-          <Route path="/registration" element={<Registration addProfile={addProfile} />} />
+          <Route
+            path="/registration"
+            element={<Registration addProfile={addProfile} />}
+          />
+          <Route path="/userinfo" element={<Userinfo />} />
         </Routes>
       </div>
     </Router>

@@ -1,5 +1,5 @@
 // src/components/ui/card.jsx
-import React from 'react';
+import React from "react";
 
 export function Card({ children, className, onClick }) {
   return (
