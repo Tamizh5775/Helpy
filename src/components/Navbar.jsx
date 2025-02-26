@@ -1,11 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation(); // Get current route
+
+  const handleNavClick = () => {
+    // Close the navbar on mobile after clicking a link
+    const navbarToggler = document.querySelector(".navbar-collapse");
+    if (navbarToggler.classList.contains("show")) {
+      navbarToggler.classList.remove("show");
+    }
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+      <div className="container">
+        <Link className="navbar-brand fw-bold" to="/">
           My App
         </Link>
         <button
@@ -19,38 +29,31 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div
+          className="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/profile">
-                Profile
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/about">
-                About
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/help-center">
-                Help Center
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/registration">
-                Registration
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/userinfo">
-                Userinfo
-              </Link>
-            </li>
+            {[
+              { path: "/", label: "Home" },
+              { path: "/about", label: "About" },
+              { path: "/help-center", label: "Help Center" },
+              { path: "/registration", label: "Registration" },
+              { path: "/userinfo", label: "Userinfo" },
+            ].map(({ path, label }) => (
+              <li className="nav-item" key={path}>
+                <Link
+                  to={path}
+                  className={`nav-link ${
+                    location.pathname === path ? "active" : ""
+                  }`}
+                  aria-current={location.pathname === path ? "page" : undefined}
+                  onClick={handleNavClick}
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

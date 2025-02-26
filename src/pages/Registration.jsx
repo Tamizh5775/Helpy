@@ -5,11 +5,12 @@ const Registration = ({ addProfile }) => {
   const [newProfile, setNewProfile] = useState({
     name: "",
     regNo: "",
-    rating: 0,
+    rating: "",
     image: "",
     details: "",
   });
 
+  const [loadingImage, setLoadingImage] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -31,12 +32,15 @@ const Registration = ({ addProfile }) => {
         alert("Image size must be less than 5MB.");
         return;
       }
+
+      setLoadingImage(true);
       const reader = new FileReader();
       reader.onloadend = () => {
         setNewProfile((prevProfile) => ({
           ...prevProfile,
           image: reader.result,
         }));
+        setLoadingImage(false);
       };
       reader.readAsDataURL(file);
     }
@@ -48,71 +52,103 @@ const Registration = ({ addProfile }) => {
       alert("Please fill in all required fields.");
       return;
     }
-    if (
-      isNaN(newProfile.rating) ||
-      newProfile.rating < 0 ||
-      newProfile.rating > 5
-    ) {
+    const ratingValue = parseFloat(newProfile.rating);
+    if (isNaN(ratingValue) || ratingValue < 0 || ratingValue > 5) {
       alert("Please enter a valid rating between 0 and 5.");
       return;
     }
-    addProfile(newProfile);
+
+    addProfile({ ...newProfile, rating: ratingValue.toFixed(1) });
     navigate("/");
   };
 
   return (
-    <div className="container mt-4">
-      <h1 className="mb-4">Register a New Profile</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          value={newProfile.name}
-          onChange={handleInputChange}
-          placeholder="Name"
-          className="form-control mb-2"
-          required
-        />
-        <input
-          type="text"
-          name="regNo"
-          value={newProfile.regNo}
-          onChange={handleInputChange}
-          placeholder="Registration Number"
-          className="form-control mb-2"
-          required
-        />
-        <input
-          type="file"
-          name="image"
-          onChange={handleImageChange}
-          className="form-control mb-2"
-          required
-        />
-        <textarea
-          name="details"
-          value={newProfile.details}
-          onChange={handleInputChange}
-          placeholder="Details"
-          className="form-control mb-2"
-          required
-        />
-        <button type="submit" className="btn btn-primary">
-          Register Profile
-        </button>
-      </form>
-
-      {newProfile.image && (
-        <div className="mt-3">
-          <h5>Image Preview:</h5>
-          <img
-            src={newProfile.image}
-            alt="Preview"
-            width="100"
-            style={{ objectFit: "cover" }}
-          />
-        </div>
-      )}
+    <div className="container mt-5">
+      <div className="card shadow-lg p-4 mx-auto" style={{ maxWidth: "500px" }}>
+        <h2 className="text-center mb-4 text-primary">Register Profile</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={newProfile.name}
+              onChange={handleInputChange}
+              className="form-control"
+              placeholder="Enter name"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Registration Number</label>
+            <input
+              type="text"
+              name="regNo"
+              value={newProfile.regNo}
+              onChange={handleInputChange}
+              className="form-control"
+              placeholder="Enter registration number"
+              pattern="[0-9]{4,}"
+              title="Enter at least 4 numeric digits"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Rating (0-5)</label>
+            <input
+              type="number"
+              name="rating"
+              value={newProfile.rating}
+              onChange={handleInputChange}
+              className="form-control"
+              min="0"
+              max="5"
+              step="0.1"
+              placeholder="Enter rating (optional)"
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Image Upload</label>
+            <input
+              type="file"
+              name="image"
+              onChange={handleImageChange}
+              className="form-control"
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Details</label>
+            <textarea
+              name="details"
+              value={newProfile.details}
+              onChange={handleInputChange}
+              className="form-control"
+              rows="3"
+              placeholder="Enter details"
+              required
+            ></textarea>
+          </div>
+          <div className="d-grid">
+            <button type="submit" className="btn btn-primary btn-lg">
+              Register
+            </button>
+          </div>
+        </form>
+        {loadingImage && (
+          <p className="text-center text-secondary">Loading image...</p>
+        )}
+        {newProfile.image && !loadingImage && (
+          <div className="mt-3 text-center">
+            <h5 className="text-secondary">Image Preview</h5>
+            <img
+              src={newProfile.image}
+              alt="Preview"
+              className="img-thumbnail rounded"
+              style={{ width: "150px", height: "150px", objectFit: "cover" }}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
