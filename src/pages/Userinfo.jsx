@@ -1,16 +1,43 @@
 import { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState({
+    img: "", // Initially no image
     name: "John Doe",
     email: "johndoe@example.com",
     bio: "Lorem ipsum dolor sit amet.",
   });
 
+  const [loadingImage, setLoadingImage] = useState(false);
+
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith("image/")) {
+        alert("Please upload a valid image file.");
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Image size must be less than 5MB.");
+        return;
+      }
+
+      setLoadingImage(true);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setUser((prevUser) => ({
+          ...prevUser,
+          img: reader.result, // Save image as Base64 string
+        }));
+        setLoadingImage(false);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSave = () => {
@@ -24,9 +51,31 @@ const UserProfile = () => {
         <div className="card-header bg-primary text-white text-center">
           <h2>User Profile</h2>
         </div>
-        <div className="card-body">
+        <div className="card-body text-center">
+          {user.img && (
+            <div className="mb-3">
+              <img
+                src={user.img}
+                alt="Profile"
+                className="img-thumbnail rounded-circle"
+                style={{ width: "150px", height: "150px", objectFit: "cover" }}
+              />
+            </div>
+          )}
           {isEditing ? (
             <div>
+              <div className="mb-3">
+                <label className="form-label">Image Upload</label>
+                <input
+                  type="file"
+                  name="img"
+                  onChange={handleImageChange}
+                  className="form-control"
+                />
+                {loadingImage && (
+                  <p className="text-secondary">Loading image...</p>
+                )}
+              </div>
               <div className="mb-3">
                 <label className="form-label">Name:</label>
                 <input

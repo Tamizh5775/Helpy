@@ -33,25 +33,27 @@ function App() {
   };
 
   return (
-    <Router>
-      <Navbar />
-      <main className="container mt-4">
-        <Routes>
-          <Route path="/" element={<Home profiles={profiles} />} />
-          <Route
-            path="/profile/:id"
-            element={<Profile profiles={profiles} />}
-          />
-          <Route path="/about" element={<About />} />
-          <Route path="/help-center" element={<HelpCenter />} />
-          <Route
-            path="/registration"
-            element={<Registration addProfile={addProfile} />}
-          />
-          <Route path="/userinfo" element={<Userinfo />} />
-        </Routes>
-      </main>
-    </Router>
+    <>
+      <Router>
+        <Navbar />
+        <main className="container mt-4">
+          <Routes>
+            <Route path="/" element={<Home profiles={profiles} />} />
+            <Route
+              path="/profile/:id"
+              element={<Profile profiles={profiles} />}
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="/help-center" element={<HelpCenter />} />
+            <Route
+              path="/registration"
+              element={<Registration addProfile={addProfile} />}
+            />
+            <Route path="/userinfo" element={<Userinfo />} />
+          </Routes>
+        </main>
+      </Router>
+    </>
   );
 }
 

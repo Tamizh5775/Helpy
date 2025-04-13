@@ -1,0 +1,16 @@
+body
+{
+    background-color: white;
+}
+
+.bordering
+{
+    box-shadow: #00000051 2px 3px 5px 2px;
+    border-radius: 6px;
+}
+
+
+.bordering h2
+{
+    color: black;
+}

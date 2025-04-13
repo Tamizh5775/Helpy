@@ -9,54 +9,59 @@ export default function Profile({ profiles }) {
 
   if (!profile) {
     return (
-      <p className="text-center text-red-500 text-lg">Profile not found</p>
+      <div className="container text-center mt-5">
+        <p className="text-danger fs-5 fw-semibold">Profile not found</p>
+      </div>
     );
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto flex flex-col items-center">
+    <div className="container d-flex flex-column align-items-center py-4">
       {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center text-gray-700 hover:text-gray-900 transition-all duration-300 mb-6"
+        className="btn btn-outline-secondary mb-3 d-flex align-items-center"
       >
-        <ArrowLeft className="w-5 h-5 mr-2" /> Back
+        <ArrowLeft className="me-2" size={18} /> Back
       </button>
 
       {/* Profile Card */}
-      <div className="bg-white shadow-2xl rounded-lg p-8 text-center w-full max-w-2xl transform hover:scale-105 transition-transform duration-300">
-        <div className="relative inline-block">
+      <div
+        className="card shadow-lg border-0 rounded-3 p-4 text-center w-100"
+        style={{ maxWidth: "500px" }}
+      >
+        <div className="position-relative mx-auto">
+          {/* Profile Image */}
           <img
             src={profile.image || "https://via.placeholder.com/150"}
-            alt={`Profile picture of ${profile.name}`}
-            className="w-36 h-36 object-cover rounded-full border-4 border-gray-300 mx-auto shadow-md"
+            alt={`Profile of ${profile.name}`}
+            className="rounded-circle border border-3 border-secondary shadow-sm img-fluid"
+            style={{ width: "120px", height: "120px", objectFit: "cover" }}
           />
-          <span className="absolute bottom-2 right-2 bg-green-400 w-4 h-4 rounded-full border-2 border-white"></span>
+          {/* Availability Indicator */}
+          <span
+            className="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle"
+            style={{ width: "15px", height: "15px" }}
+          ></span>
         </div>
-        <h2 className="text-3xl font-semibold mt-4 text-gray-800">
-          {profile.name}
-        </h2>
-        <p className="text-gray-500 text-lg">
-          Reg. No: {profile.registrationNumber || "N/A"}
-        </p>
 
-        {/* Profile Details */}
-        <p className="mt-4 text-gray-700 text-md leading-relaxed px-4">
+        {/* Profile Name & Details */}
+        <h2 className="mt-3 fw-bold text-dark">{profile.name}</h2>
+        <p className="text-muted mb-2">
+          Reg. No: {profile.regNo ? profile.regNo : "N/A"}
+        </p>
+        <p className="text-secondary fst-italic">
           {profile.details || "No additional details available."}
         </p>
 
         {/* Star Ratings */}
-        <div className="flex justify-center mt-4">
+        <div className="d-flex justify-content-center mt-3">
           {[...Array(5)].map((_, i) => (
             <Star
               key={i}
               fill={i < Math.floor(profile.rating || 0) ? "#facc15" : "#d1d5db"}
-              className={`w-6 h-6 transition-all duration-300 ${
-                i < Math.floor(profile.rating || 0)
-                  ? "text-yellow-400"
-                  : "text-gray-300"
-              }`}
-              aria-hidden="true"
+              className="mx-1"
+              size={24}
               title={`${profile.rating || 0} Stars`}
             />
           ))}

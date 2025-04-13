@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const location = useLocation(); // Get current route
@@ -15,9 +15,9 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
       <div className="container">
-        <Link className="navbar-brand fw-bold" to="/">
+        <NavLink className="navbar-brand fw-bold" to="/">
           My App
-        </Link>
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -42,16 +42,14 @@ const Navbar = () => {
               { path: "/userinfo", label: "Userinfo" },
             ].map(({ path, label }) => (
               <li className="nav-item" key={path}>
-                <Link
+                <NavLink
                   to={path}
-                  className={`nav-link ${
-                    location.pathname === path ? "active" : ""
-                  }`}
-                  aria-current={location.pathname === path ? "page" : undefined}
-                  onClick={handleNavClick}
+                  className="nav-link"
+                  activeClassName="active"
+                  onClick={handleNavClick} // Close navbar on click
                 >
                   {label}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
